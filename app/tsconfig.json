@@ -4,7 +4,10 @@
     "jsx": "react",
     "rootDir": "..",
     "baseUrl": ".",
-    "typeRoots": ["@types", "../node_modules/@types"],
+    "typeRoots": [
+      "@types",
+      "../node_modules/@types"
+    ],
     "paths": {
       "~/assets": ["./src/assets"],
       "~/assets/*": ["./src/assets/*"],
@@ -43,6 +46,13 @@
     "module": "commonjs",
     "moduleResolution": "node"
   },
-  "exclude": ["jest.config.js"],
-  "include": ["./__tests__", "./src/**/*", "./src/i18n/*.json"]
+  "exclude": [
+    "jest.config.js",
+  ],
+  "include": [
+    "./__tests__",
+    "./src",
+    "./src/**/*",
+    "./src/i18n/*.json"
+  ]
 }
