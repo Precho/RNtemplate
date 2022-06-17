@@ -43,11 +43,7 @@ jobs:
           command: |
             yarn tsc -p ./app/tsconfig.json
             yarn eslint ./app --ext .js,.jsx,.ts,.tsx --config ./app/.eslintrc.js --quiet
-      - persist_to_workspace:
-          root: ~/rntemplate
-          paths:
-            - ./node_modules
-            - ./app/node_modules
+
 workflows:
   version: 2
   test-and-build:
