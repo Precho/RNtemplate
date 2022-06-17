@@ -43,7 +43,6 @@ jobs:
           command: |
             yarn tsc -p ./app/tsconfig.json
             yarn eslint ./app --ext .js,.jsx,.ts,.tsx --config ./app/.eslintrc.js --quiet
-            yarn jest --forceExit --detectOpenHandles --passWithNoTests --runInBand
       - persist_to_workspace:
           root: ~/rntemplate
           paths:
