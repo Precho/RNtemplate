@@ -1,0 +1,51 @@
+version: 2.1
+
+aliases:
+  - &save_yarn_cache
+    name: Save yarn into the cache
+    key: yarn-cache-{{ checksum "yarn.lock" }}-{{ arch }}
+    paths:
+      - ~/.cache/yarn
+  - &restore_yarn_cache
+    name: Restore yarn from the cache
+    key: yarn-cache-{{ checksum "yarn.lock" }}-{{ arch }}
+  - &restore_dependencies
+    name: Restore node_modules from the cache
+    key: node-cache-{{ checksum "yarn.lock" }}-{{ arch }}
+  - &install_dependencies
+    name: Install dependencies
+    command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+  - &save_dependencies
+    name: Save node_modules into the cache
+    key: node-cache-{{ checksum "yarn.lock" }}-{{ arch }}
+    paths:
+      - ./node_modules
+      - ./app/node_modules
+
+jobs:
+  ci-check:
+    working_directory: ~/rntemplate
+    docker:
+      - image: cimg/node:14.18
+
+    shell: /bin/bash --login -eo pipefail
+
+    steps:
+      - checkout
+      - restore_cache: *restore_yarn_cache
+      - restore_cache: *restore_dependencies
+      - run: *install_dependencies
+      - run: cd app && yarn
+      - save_cache: *save_dependencies
+      - save_cache: *save_yarn_cache
+      - run:
+          name: CI
+          command: |
+            yarn tsc -p ./app/tsconfig.json
+            yarn eslint ./app --ext .js,.jsx,.ts,.tsx --config ./app/.eslintrc.js --quiet
+
+workflows:
+  version: 2
+  test-and-build:
+    jobs:
+      - ci-check
