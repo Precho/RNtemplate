@@ -1,0 +1,23 @@
+# common
+node_modules
+plugins
+scripts
+babel.config.js
+withintent.config.js
+commitlint.config.js
+jest.config.js
+.eslintrc.js
+
+#root
+project.utils.js
+
+# native
+native/*.js
+
+# app
+app/*.js
+app/__mocks__
+app/__tests__
+
+# docs
+docs/*.js
