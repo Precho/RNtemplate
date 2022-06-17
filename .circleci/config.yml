@@ -82,7 +82,7 @@ aliases:
 
 jobs:
   ci-check:
-    working_directory: ~/rntemplate
+    working_directory: ~/vi-appen
     docker:
       - image: cimg/node:14.18
 
@@ -102,13 +102,12 @@ jobs:
             yarn eslint ./app --ext .js,.jsx,.ts,.tsx --config ./app/.eslintrc.js --quiet
             yarn jest --forceExit --detectOpenHandles --passWithNoTests --runInBand
       - persist_to_workspace:
-          root: ~/rntemplate
+          root: ~/RNtemplate
           paths:
             - ./node_modules
-            - ./native/node_modules
+            - ./app/node_modules
 workflows:
   version: 2
   test-and-build:
     jobs:
       - ci-check
-
