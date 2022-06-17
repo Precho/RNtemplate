@@ -1,0 +1,48 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "rootDir": "..",
+    "baseUrl": ".",
+    "typeRoots": ["@types", "../node_modules/@types"],
+    "paths": {
+      "~/assets": ["./src/assets"],
+      "~/assets/*": ["./src/assets/*"],
+      "~/components/*": ["./src/components/*"],
+      "~/screens/*": ["./src/screens/*"],
+      "~/utils/*": ["./src/utils/*"],
+      "~/validators": ["./src/validators"],
+      "~/validators/*": ["./src/validators/*"],
+      "~/hooks": ["./src/hooks"],
+      "~/hooks/*": ["./src/hooks/*"],
+      "~/styles": ["./src/styles"],
+      "~/styles/*": ["./src/styles/*"],
+      "~/services": ["./src/services"],
+      "~/services/*": ["./src/services/*"],
+      "~/providers": ["./src/providers"],
+      "~/providers/*": ["./src/providers/*"],
+      "~/i18n": ["./src/i18n"],
+      "~/i18n/*": ["./src/i18n/*"],
+      "~/navigation": ["./src/navigation"],
+      "~/navigation/*": ["./src/navigation/*"],
+      "~/protos": ["./src/protos"],
+      "~/models": ["./src/models"],
+      "~/models/*": ["./src/models/*"],
+      "~/graphql": ["./src/graphql"],
+      "~/graphql/*": ["./src/graphql/*"],
+      "__tests__/*": ["./__tests__/*"],
+      "*": [
+        "../node_modules/*",
+        "../node_modules/@types",
+        "./node_modules/*",
+        "./node_modules/@types/*",
+        "../native/node_modules/*",
+        "../native/@types/node_modules/*"
+      ]
+    },
+    "module": "commonjs",
+    "moduleResolution": "node"
+  },
+  "exclude": ["jest.config.js"],
+  "include": ["./__tests__", "./src/**/*", "./src/i18n/*.json"]
+}
