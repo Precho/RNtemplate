@@ -82,7 +82,7 @@ aliases:
 
 jobs:
   ci-check:
-    working_directory: ~/vi-appen
+    working_directory: ~/RNtemplate
     docker:
       - image: cimg/node:14.18
 
