@@ -1,0 +1,24 @@
+{
+  ".js, .jsx, .ts, .tsx": {
+    "parser": "typescript",
+    "style": "mobily",
+    "options": {
+      "alias": [
+        "~/assets",
+        "~/components",
+        "~/hooks",
+        "~/providers",
+        "~/navigation",
+        "~/styles",
+        "~/utils",
+        "~/shared",
+        "~/services",
+        "~/screens",
+        "~/i18n",
+        "~/validators",
+        "~/protos",
+        "~/models"
+      ]
+    }
+  }
+}

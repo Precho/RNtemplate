@@ -4,7 +4,7 @@
  *
  * @format
  */
-
+import tmp from '`'
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -14,4 +14,4 @@ module.exports = {
       },
     }),
   },
-};
+}

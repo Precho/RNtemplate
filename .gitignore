@@ -1,0 +1,24 @@
+# mac files
+.DS_Store
+
+# common files
+.env
+.env.*
+!.env.example
+node_modules/
+
+# temp files
+.cache/
+*.log
+*.tsbuildinfo
+*.hprof
+
+# personal settings
+.vscode/
+.idea/
+.atom/
+.history/
+.bundle/
+vendor/
+
+.png-cache/
