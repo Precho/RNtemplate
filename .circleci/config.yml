@@ -24,7 +24,7 @@ aliases:
 
 jobs:
   ci-check:
-    working_directory: ~/RNtemplate
+    working_directory: ~/rntemplate
     docker:
       - image: cimg/node:14.18
 
@@ -32,6 +32,8 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache: *restore_yarn_cache
+      - restore_cache: *restore_dependencies
       - run: *install_dependencies
       - save_cache: *save_dependencies
       - save_cache: *save_yarn_cache
@@ -42,7 +44,7 @@ jobs:
             yarn eslint ./app --ext .js,.jsx,.ts,.tsx --config ./app/.eslintrc.js --quiet
             yarn jest --forceExit --detectOpenHandles --passWithNoTests --runInBand
       - persist_to_workspace:
-          root: ~/RNtemplate
+          root: ~/rntemplate
           paths:
             - ./node_modules
             - ./app/node_modules
