@@ -20,65 +20,7 @@ aliases:
     key: node-cache-{{ checksum "yarn.lock" }}-{{ arch }}
     paths:
       - ./node_modules
-      - ./native/node_modules
-  - &install_bundler
-    name: Install bundler
-    command: |
-      touch ~/.gemrc
-      echo "gem: --no-document" >> ~/.gemrc
-      sudo gem update --system
-      sudo gem install bundler
-  - &restore_gem_cache
-    name: Restore gems from the cache
-    key: gemfile-cache-{{ checksum "Gemfile.lock" }}-{{ arch }}
-  - &install_gems
-    name: Install gems
-    command: |
-      bundle config set --local deployment 'true'
-      bundle install --jobs 2
-  - &save_gem_cache
-    name: Save gems into the cache
-    key: gemfile-cache-{{ checksum "Gemfile.lock" }}-{{ arch }}
-    paths:
-      - vendor/bundle
-  - &update_sdk_manager
-    name: Update Android SDK Manager
-    command: |
-      echo 'Y' | sdkmanager "build-tools;30.0.2"
-  - &accept_sdk_licenses
-    name: Accept Android SDK Licences
-    command: |
-      echo 'Y' | sdkmanager --licenses
-  - &decrypt_keystore_properties
-    name: Decrypt keystore.properties
-    command: |
-      cd ./native/android
-      openssl enc -aes-256-cbc -d -iter 1000 -in keystore.properties.encrypted -out keystore.properties -k ${ANDROID_KEYSTORE_PASSWORD}
-  - &restore_pods_cache
-    name: Restore Pods from the cache
-    key: pods-v3-{{ checksum "native/ios/Podfile.lock" }}-{{ arch }}
-  - &install_pods
-    name: Install Pods
-    command: |
-      cd ./native
-      yarn ios install-pods
-  - &save_pods_cache
-    name: Save Pods into the cache
-    key: pods-v3-{{ checksum "native/ios/Podfile.lock" }}-{{ arch }}
-    paths:
-      - native/ios/Pods
-  - &update_cocoapods
-    name: Update cocoapods
-    command: |
-      sudo gem install cocoapods
-  - &install_sentry_cli
-    name: Install Sentry CLI
-    command: |
-      curl -sL https://sentry.io/get-cli/ | bash
-  - &install_app_center_cli
-    name: Install AppCenter CLI
-    command: |
-      sudo npm install appcenter-cli -g
+      - ./app/node_modules
 
 jobs:
   ci-check:
