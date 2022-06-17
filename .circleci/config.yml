@@ -90,6 +90,7 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache: *restore_yarn_cache
       - restore_cache: *restore_dependencies
       - run: *install_dependencies
       - save_cache: *save_dependencies
