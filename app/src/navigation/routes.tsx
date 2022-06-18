@@ -18,6 +18,7 @@ export const AppRootNavigator = () => {
       <AppRootNativeStack.Group
         screenOptions={{
           presentation: 'card',
+          //TODO: ADD HEADER
           // header: props => <ScreenHeader {...props} />,
           headerShown: true,
         }}
