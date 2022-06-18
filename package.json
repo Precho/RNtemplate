@@ -1,10 +1,10 @@
 {
-  "name": "vi-appen",
+  "name": "rntemplate",
   "version": "0.0.1",
   "private": true,
   "license": "UNLICENSED",
   "author": "@dotintent",
-  "repository": "git@github.com:dotintent/vi-appen.git",
+  "repository": "",
   "scripts": {
     "generate": "yarn foy -c ./scripts/generate.ts",
     "translations": "yarn foy -c ./scripts/translations.ts",
