@@ -35,6 +35,7 @@ jobs:
       - restore_cache: *restore_yarn_cache
       - restore_cache: *restore_dependencies
       - run: *install_dependencies
+      //TODO: FIX WOODEN COMADS 
       - run: cd app && yarn
       - save_cache: *save_dependencies
       - save_cache: *save_yarn_cache
@@ -45,7 +46,7 @@ jobs:
             yarn eslint ./app --ext .js,.jsx,.ts,.tsx --config ./app/.eslintrc.js --quiet
 
 workflows:
-  version: 2
+  version: 1
   test-and-build:
     jobs:
       - ci-check
