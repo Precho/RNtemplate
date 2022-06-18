@@ -39,8 +39,8 @@
         "../node_modules/@types",
         "./node_modules/*",
         "./node_modules/@types/*",
-        "../native/node_modules/*",
-        "../native/@types/node_modules/*"
+        "../app/node_modules/*",
+        "../app/@types/node_modules/*"
       ]
     },
     "module": "commonjs",
@@ -56,3 +56,4 @@
     "./src/i18n/*.json"
   ]
 }
+
