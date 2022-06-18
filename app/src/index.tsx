@@ -1,9 +1,17 @@
+import React from 'react'
 /**
  * @format
  */
 import { AppRegistry } from 'react-native'
+import { enableScreens } from 'react-native-screens'
 
-import { MainScreen } from './screens/MainScreen'
+import { Navigator } from './navigation'
 import { name as appName } from '../app.json'
 
-AppRegistry.registerComponent(appName, () => MainScreen)
+enableScreens()
+
+const App = () => {
+  return <Navigator />
+}
+
+AppRegistry.registerComponent(appName, () => App)

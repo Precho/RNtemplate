@@ -1,24 +1,22 @@
 import React from 'react'
-import { SafeAreaView, ScrollView, StatusBar, View, useColorScheme } from 'react-native'
-import { Colors, Header, LearnMoreLinks } from 'react-native/Libraries/NewAppScreen'
+import { Button, SafeAreaView, StatusBar, View, useColorScheme } from 'react-native'
 
-import { styles } from './styles'
+import * as route from '../../navigation/routes'
+import { goTo } from '../../navigation/utils'
 
 export const MainScreen = () => {
   const isDarkMode = useColorScheme() === 'dark'
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  }
+
+  const handleNavigate = React.useCallback(() => {
+    goTo(route.toTestScreen)
+  }, [])
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView contentInsetAdjustmentBehavior="automatic" style={backgroundStyle}>
-        <Header />
-        <View style={styles.root}>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <View>
+        <Button onPress={handleNavigate} title="Go to TestScreen" />
+      </View>
     </SafeAreaView>
   )
 }

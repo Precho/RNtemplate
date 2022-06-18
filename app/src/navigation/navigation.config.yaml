@@ -1,0 +1,472 @@
+aliases:
+  - &card
+    presentation: "'card'"
+  - &modal
+    presentation: "'containedTransparentModal'"
+  - &hideHeader
+    headerShown: false
+  - &header
+    header: props => <ScreenHeader {...props} />
+    headerShown: true
+  - &disableGestures
+    gestureEnabled: false
+
+imports:
+  ScreenHeader: ~/components/ScreenHeader
+  TabBar: ~/components/TabBar
+
+navigators:
+  AuthResetPassword:
+    path: ~/screens/Auth/ResetPassword
+    props:
+      screenOptions: *header
+    children:
+      - Code:
+          params:
+            email: string
+            isFromSettings?: boolean
+            parentScreen?: string
+      - Confirm:
+          params:
+            email: string
+            code: string
+            isFromSettings?: boolean
+      - group:
+          props:
+            screenOptions: *modal
+          children:
+            - Success:
+                params:
+                  email: string
+                  password: string
+
+  Auth:
+    path: ~/screens/Auth
+    props:
+      screenOptions: *header
+    children:
+      - Login:
+          params:
+            email?: string
+      - Login2FACode:
+          params:
+            email: string
+            password: string
+      - RegisterEmail:
+          params:
+            clearInput?: boolean
+      - RegisterPassword
+      - group:
+          name: AuthResetPassword
+          path: ~/screens/Auth/ResetPassword
+          props:
+            screenOptions: *modal
+          children:
+            - ProvideEmail
+            - MigrationInfo:
+                params:
+                  email: string
+            - navigator: AuthResetPassword
+              props:
+                options: *hideHeader
+
+  Onboarding:
+    path: ~/screens/Onboarding
+    props:
+      screenOptions: *header
+    children:
+      - Intro:
+          props:
+            options: *hideHeader
+      - Name
+      - Gender
+      - Birthday
+      - Address
+      - Country
+
+  TwoFactorAuth:
+    path: ~/screens/TwoFactorAuth
+    props:
+      screenOptions: *header
+    children:
+      - Intro:
+          params:
+            isDeepLink?: boolean
+      - Disable2FA
+      - PhoneNumber
+      - Code:
+          params:
+            lastDigits: string
+      - Disable2FACode:
+          params:
+            lastDigits: string
+      - group:
+          props:
+            screenOptions: *modal
+          children:
+            - Success:
+                params:
+                  isSuccessfullyDisabled: boolean
+
+  AfterRegistration:
+    path: ~/screens/AfterRegistration
+    props:
+      screenOptions:
+        << : [*hideHeader, *modal]
+    children:
+      - ModeSelect:
+          params:
+            isOnboardingInterrupted?: boolean
+      - Notifications:
+          params:
+            triggerNavigation?: boolean
+      - navigator: ConnectingPartner
+
+  ConnectingPartner:
+    path: ~/screens/ConnectingPartner
+    props:
+      screenOptions: *header
+    children:
+      - Invite
+      - Share:
+          params:
+            code?: string
+      - group:
+          props:
+            screenOptions:
+              << : [*modal, *hideHeader]
+          children:
+            - Match:
+                params:
+                  partnerName: string
+                  connectionCode: string
+            - Paired
+            - Disconnected
+
+  Lesson:
+    path: ~/screens/Lesson
+    props:
+      screenOptions: *header
+    children:
+      - Tutorial:
+          params:
+            isStepCompleted?: boolean
+      - Video:
+          props:
+            options: *hideHeader
+          params:
+            isStepCompleted?: boolean
+      - BeforeQuestions
+      - Questions
+      - AfterQuestions
+      - BeforeHug
+      - Hug
+      - Sync:
+          params:
+            resultId: string
+          props:
+            options: *hideHeader
+      - Results:
+          params:
+            isStepCompleted?: boolean
+      - MyResults
+      - Homework:
+           params:
+             isLessonArchived?: boolean
+      - Completed
+      - NotScheduledHug:
+          params:
+            currentLessonIndex: number
+            lessonId: string
+      - ScheduledHug:
+          params:
+            scheduledDate?: string
+            lessonId: string
+            currentLessonIndex: number
+      - ScheduleDate:
+          params:
+            proposedDate?: string
+            isRescheduleProcess?: boolean
+            lessonId: string
+            lessonIndex: number
+      - Celebration:
+          props:
+            options: *hideHeader
+      - AfterCelebration
+
+  CourseSyllabus:
+    path: ~/screens/CourseSyllabus
+    props:
+      screenOptions: *header
+    children:
+      - List
+      - ArchivedLesson:
+          params:
+            lessonId: string
+            mode: string
+
+  SettingsYourCourse:
+    path: ~/screens/Settings/YourCourse
+    props:
+      screenOptions: *header
+    children:
+      - Current
+      - Select
+
+  SettingsAbout:
+    path: ~/screens/Settings/About
+    props:
+      screenOptions: *header
+    children:
+      - Root
+      - HowItWorks
+      - PeopleBehind
+      - group:
+          props:
+            screenOptions: *modal
+          children:
+            - PrivacyPolicy
+            - TermsOfService
+
+  SettingsAccount:
+    path: ~/screens/Settings/Account
+    props:
+      screenOptions: *header
+    children:
+      - Manage
+      - EditName
+      - EditGender
+      - EditYearOfBirth
+      - EditAddress
+      - EditCountry
+      - EditEmail
+      - EditEmailConfirm
+      - EditPassword
+      - group:
+          props:
+            screenOptions: *modal
+          children:
+            - EditPasswordSuccess
+      - Delete
+      - DeleteConfirm:
+          params:
+            option: string
+            description: string
+      - DeleteReason
+
+  Homework:
+    path: ~/screens/Homework
+    props:
+      screenOptions: *header
+    children:
+      - UnlockedHub
+      - group:
+          name: HomeworkUnlocked
+          path: ~/screens/Homework/Unlocked
+          props:
+            screenOptions: *header
+          children:
+            - Couple
+            - Parent
+            - DeepDiveCourses
+            - DeepDives:
+                params:
+                 deepDiveId: string
+                 lessonsLength: number
+                 title: string
+      - Completed
+      - Create
+      - PreviewEditDelete:
+          params:
+            text: string
+            homeworkId: string
+            isActive?: boolean
+            timestamp?: number
+            isPartnerHomework?: boolean
+            completionRoute?: string
+      - PremiumPreviewDelete:
+          params:
+            text: string
+            homeworkId: string
+            isActive?: boolean
+            isCompleted?: boolean
+            timestamp?: number
+            isPartnerHomework?: boolean  
+            mode?: string     
+            level?: number
+            lessonIndex?: number       
+            subject?: string   
+            isLessonHomework?: boolean   
+            isDeepDiveLessonHomework?: boolean   
+            deepDiveCourseTitle?: string  
+            completionRoute?: string
+            lessonId: string
+      - Active
+
+  Migration:
+    path: ~/screens/Migration
+    props:
+      screenOptions: *header
+    children:
+      - Welcome:
+          props:
+            options: *hideHeader
+      - Marketing
+      - WhatsNew
+      - NeedsUpdate
+
+  DeepDiveLesson:
+    path: ~/screens/DeepDiveLesson
+    props:
+      screenOptions: *header
+    children:
+      - Tutorial:
+          params:
+            isDeepDiveActivated?: boolean
+      - Video:
+          props:
+            options: *hideHeader
+          params:
+            isFromDeepDiveDetails?: boolean
+      - Homework
+      - Results
+      - BeforeQuestions
+      - Questions
+      - AfterQuestions
+      - Success
+
+  DeepDive:
+    path: ~/screens/DeepDive
+    props:
+      screenOptions: *header
+    children:
+      - Details
+      - ActiveHub
+      - CompletedHub
+
+  DeepDiveComplete:
+    path: ~/screens/DeepDive/Complete
+    props:
+      screenOptions: *header
+    children:
+      - CourseSuccess
+      - KeyTakeAways:
+          params:
+            isFromSyllabus?: boolean
+      - CourseFinish
+
+  BottomTabs:
+    type: bottom-tab
+    path: ~/screens/BottomTabs
+    props:
+      screenOptions: *header
+      tabBar: props => <TabBar {...props} />
+    children:
+      - Home:
+          props:
+            options: *hideHeader
+      - Homework:
+          params:
+            tab?: string
+      - Settings
+      - Plus
+      - Course
+
+  AuthWithOnboarding:
+    export: true
+    props:
+      screenOptions: *hideHeader
+    children:
+      - Welcome:
+          path: ~/screens/Welcome
+      - navigator: Auth
+      - navigator: Onboarding
+      - group:
+          props:
+            screenOptions: *modal
+          children:
+            - navigator: AfterRegistration
+      - group:
+          name: SettingsAbout
+          path: ~/screens/Settings/About
+          props:
+            screenOptions:
+              << : [*header, *modal]
+          children:
+            - PrivacyPolicy
+            - TermsOfService
+
+  Paywall:
+    path: ~/screens/Paywall
+    props:
+      screenOptions: *header
+    children:
+      - Test
+
+  AppRoot:
+    export: true
+    children:
+      - navigator: BottomTabs
+        props:
+          options: *hideHeader
+      - group:
+          props:
+            screenOptions:
+              << : [*modal, *hideHeader]
+          children:
+            - navigator: ConnectingPartner
+            - navigator: TwoFactorAuth
+            - navigator: Lesson
+            - navigator: DeepDiveLesson
+            - navigator: CourseSyllabus
+            - navigator: AuthResetPassword
+            - navigator: Migration
+            - navigator: DeepDiveComplete
+            - navigator: Paywall
+
+            - HomeworkCelebration:
+                path: ~/screens/Homework/Celebration
+                props:
+                  name: HomeworkCelebration
+                params:
+                    completionRoute?: string
+
+
+      - group:
+          path: ~/screens/CourseNotification
+          name: CourseNotification
+          props:
+            screenOptions:
+              << : [*modal, *header]
+          children:
+            - Deactivated
+            - Restarted
+            - Reset
+
+      - group:
+          props:
+            screenOptions:
+              << : [*card, *hideHeader]
+          children:
+            - navigator: SettingsYourCourse
+            - navigator: SettingsAbout
+            - navigator: SettingsAccount
+            - navigator: Homework
+            - navigator: DeepDive
+
+      - group:
+          path: ~/screens/Settings
+          name: Settings
+          props:
+            screenOptions:
+              << : [*card, *header]
+          children:
+            - ContactUs
+            - Notifications
+            - TwoFactorAuth
+            - MyPartner:
+                params:
+                  lastLessonLevel?: number
+            - NeedsUpdate:
+                  params:
+                    lastLessonLevel?: number
