@@ -6,9 +6,12 @@
     "start:android": "yarn react-native run-android",
     "start:ios": "yarn react-native run-ios",
     "dev": "yarn react-native start",
-    "test": "yarn foy -c ./scripts/test.ts"
+    "test": "yarn foy -c ./scripts/test.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@mobily/stacks": "^2.1.0",
     "@mobily/ts-belt": "^3.11.0",
     "@mobily/wonka-extras": "^0.2.2",
@@ -37,7 +40,8 @@
     "react-native-inhibit-warnings": "^1.0.1",
     "react-native-svg-asset-plugin": "^0.5.0",
     "react-native-typescript-transformer": "^1.2.13",
-    "uri-scheme": "^1.0.104"
+    "uri-scheme": "^1.0.104",
+    "husky": "^8.0.0"
   },
   "resolutions": {
     "@types/react": "^17"
